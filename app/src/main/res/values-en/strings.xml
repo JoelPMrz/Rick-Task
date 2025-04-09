@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Rick &amp; Tasks</string>
+    <string name="title_home">Home</string>
+    <string name="title_characters">Characters</string>
+    <string name="title_favourites">Favourites</string>
+    <string name="add_task_fab_description">Button to add new task</string>
+    <string name="no_tasks_yet">There are no tasks yet</string>
+</resources>

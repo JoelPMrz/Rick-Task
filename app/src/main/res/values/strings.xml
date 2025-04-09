@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Rick &amp; Tasks</string>
-    <string name="title_home">Home</string>
-    <string name="title_characters">Characters</string>
-    <string name="title_favourites">Favourites</string>
+    <string name="title_home">Principal</string>
+    <string name="title_characters">Personajes</string>
+    <string name="title_favourites">Favoritos</string>
+    <string name="add_task_fab_description">Botón para agregar nueva tarea</string>
+    <string name="no_tasks_yet">Todavía no hay tareas</string>
 </resources>
