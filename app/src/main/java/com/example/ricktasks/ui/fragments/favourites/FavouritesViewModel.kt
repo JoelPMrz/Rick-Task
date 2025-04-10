@@ -1,13 +1,13 @@
-package com.example.ricktasks.ui.characters
+package com.example.ricktasks.ui.fragments.favourites
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class CharactersViewModel : ViewModel() {
+class FavouritesViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is characters Fragment"
+        value = "This is favourites Fragment"
     }
     val text: LiveData<String> = _text
 }

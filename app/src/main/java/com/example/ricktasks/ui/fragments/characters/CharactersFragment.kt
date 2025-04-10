@@ -1,4 +1,4 @@
-package com.example.ricktasks.ui.characters
+package com.example.ricktasks.ui.fragments.characters
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -22,8 +22,7 @@ class CharactersFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val charactersViewModel =
-            ViewModelProvider(this).get(CharactersViewModel::class.java)
+        val charactersViewModel = ViewModelProvider(this).get(CharactersViewModel::class.java)
 
         _binding = FragmentCharactersBinding.inflate(inflater, container, false)
         val root: View = binding.root

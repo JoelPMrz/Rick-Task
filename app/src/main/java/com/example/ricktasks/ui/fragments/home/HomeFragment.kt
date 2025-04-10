@@ -1,12 +1,14 @@
-package com.example.ricktasks.ui.home
+package com.example.ricktasks.ui.fragments.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.example.ricktasks.MainActivity
+import com.example.ricktasks.R
 import com.example.ricktasks.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -28,15 +30,22 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        (activity as MainActivity).showBottomNav()
+
+        binding.fabAddTask.setOnClickListener{
+            findNavController().navigate(R.id.action_navigation_home_to_navigation_add_edit_task)
         }
+
         return root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+
+    fun listeners(){
+
     }
 }

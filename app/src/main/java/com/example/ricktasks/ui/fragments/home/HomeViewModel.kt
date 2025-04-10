@@ -1,4 +1,4 @@
-package com.example.ricktasks.ui.home
+package com.example.ricktasks.ui.fragments.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,4 +10,6 @@ class HomeViewModel : ViewModel() {
         value = "This is home Fragment"
     }
     val text: LiveData<String> = _text
+
+
 }

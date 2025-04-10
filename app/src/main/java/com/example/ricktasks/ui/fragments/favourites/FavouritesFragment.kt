@@ -1,4 +1,4 @@
-package com.example.ricktasks.ui.favourites
+package com.example.ricktasks.ui.fragments.favourites
 
 import android.os.Bundle
 import android.view.LayoutInflater

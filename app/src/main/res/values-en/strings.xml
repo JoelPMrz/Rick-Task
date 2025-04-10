@@ -6,4 +6,5 @@
     <string name="title_favourites">Favourites</string>
     <string name="add_task_fab_description">Button to add new task</string>
     <string name="no_tasks_yet">There are no tasks yet</string>
+    <string name="btn_add_edit_task">Añadir</string>
 </resources>

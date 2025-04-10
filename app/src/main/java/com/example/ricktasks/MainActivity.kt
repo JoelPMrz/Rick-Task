@@ -1,6 +1,7 @@
 package com.example.ricktasks
 
 import android.os.Bundle
+import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -24,5 +25,18 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
         navView.setupWithNavController(navController)
+
+    }
+
+    fun hideBottomNav() {
+        if (::binding.isInitialized) {
+            binding.navView.visibility = View.GONE
+        }
+    }
+
+    fun showBottomNav() {
+        if (::binding.isInitialized) {
+            binding.navView.visibility = View.VISIBLE
+        }
     }
 }

@@ -5,4 +5,14 @@
     <string name="title_favourites">Favoritos</string>
     <string name="add_task_fab_description">Botón para agregar nueva tarea</string>
     <string name="no_tasks_yet">Todavía no hay tareas</string>
+    <string name="btn_add_edit_task">Añadir</string>
+    <string name="add_edit_task_title">Nueva Tarea</string>
+    <string name="task_form_hint_title">Hacer la compra</string>
+    <string name="form_task_hint_title">Título</string>
+    <string name="form_task_hint_description">Descripción</string>
+    <string name="form_task_hint_date">Fecha</string>
+    <string name="form_task_completed">completada</string>
+    <string name="title_add_edit_task">Nueva tarea</string>
+    <string name="ic_filter_list_description">Icono de filtro para modificar el orden de la lista de tareas</string>
+    <string name="home_title">Tareas</string>
 </resources>
