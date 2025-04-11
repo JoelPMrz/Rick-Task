@@ -80,21 +80,6 @@ class AddEditTaskFragment: Fragment() {
         chipUpdateColors()
     }
 
-    //Actualizar colores e iconos
-    private fun chipUpdateColors(){
-        if(chip.isChecked){
-            chip.setChipBackgroundColorResource(R.color.md_theme_secondaryContainer)
-            chip.setTextColor(ContextCompat.getColor(requireContext(), R.color.md_theme_onSecondaryContainer))
-            chip.setChipIconResource(R.drawable.ic_check_circle_24dp)
-            chip.setChipIconTintResource(R.color.md_theme_onSecondaryContainer)
-        }else{
-            chip.setChipBackgroundColorResource(R.color.md_theme_errorContainer)
-            chip.setTextColor(ContextCompat.getColor(requireContext(), R.color.md_theme_onErrorContainer))
-            chip.setChipIconResource(R.drawable.ic_cancel_circle_24dp)
-            chip.setChipIconTintResource(R.color.md_theme_onErrorContainer)
-        }
-    }
-
     //Llamada para los listeners, controlar los clicks
     private fun listeners(){
         binding.tbAddEditTask.setNavigationOnClickListener {
@@ -111,10 +96,32 @@ class AddEditTaskFragment: Fragment() {
             showDatePickerDialog()
         }
 
-        binding.btnAddEditTask.setOnClickListener(){
+        binding.btnAddEditTask.setOnClickListener{
             addTask()
         }
+
+        binding.tbAddEditTask.setNavigationOnClickListener{
+            findNavController().popBackStack()
+        }
     }
+
+
+    //Actualizar colores e iconos
+    private fun chipUpdateColors(){
+        if(chip.isChecked){
+            chip.setChipBackgroundColorResource(R.color.md_theme_secondaryContainer)
+            chip.setTextColor(ContextCompat.getColor(requireContext(), R.color.md_theme_onSecondaryContainer))
+            chip.setChipIconResource(R.drawable.ic_check_circle_24dp)
+            chip.setChipIconTintResource(R.color.md_theme_onSecondaryContainer)
+        }else{
+            chip.setChipBackgroundColorResource(R.color.md_theme_errorContainer)
+            chip.setTextColor(ContextCompat.getColor(requireContext(), R.color.md_theme_onErrorContainer))
+            chip.setChipIconResource(R.drawable.ic_cancel_circle_24dp)
+            chip.setChipIconTintResource(R.color.md_theme_onErrorContainer)
+        }
+    }
+
+
 
     private fun addTask() {
         // Obtener los valores de los campos de entrada

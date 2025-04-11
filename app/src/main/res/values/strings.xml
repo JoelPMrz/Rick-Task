@@ -15,4 +15,7 @@
     <string name="title_add_edit_task">Nueva tarea</string>
     <string name="ic_filter_list_description">Icono de filtro para modificar el orden de la lista de tareas</string>
     <string name="home_title">Tareas</string>
+    <string name="card_task_title">Título</string>
+    <string name="card_task_description">Breve descripción de la tarea</string>
+    <string name="card_task_date">21 April 2025</string>
 </resources>

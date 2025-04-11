@@ -9,7 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.ricktasks.MainActivity
 import com.example.ricktasks.R
+import com.example.ricktasks.data.local.entity.TaskEntity
 import com.example.ricktasks.databinding.FragmentHomeBinding
+import com.example.ricktasks.ui.adapters.TasksAdapter
 
 class HomeFragment : Fragment() {
 
@@ -31,10 +33,14 @@ class HomeFragment : Fragment() {
         val root: View = binding.root
 
         (activity as MainActivity).showBottomNav()
-
-        binding.fabAddTask.setOnClickListener{
-            findNavController().navigate(R.id.action_navigation_home_to_navigation_add_edit_task)
-        }
+        binding.rvTasks.adapter = TasksAdapter(
+            listOf(
+                TaskEntity(1,"Titulo 1", "Esto es una descripcion 1", "22 Marzo 2025", false),
+                TaskEntity(2,"Titulo 2 algo más larguete ", "Esto es una descripcion 2", "05 Enero 2025", false),
+                TaskEntity(3,"Titulo 3", "Esto es una descripcion 3", "30 Noviembre 2024", true)
+            )
+        )
+        listeners()
 
         return root
     }
@@ -46,6 +52,8 @@ class HomeFragment : Fragment() {
 
 
     fun listeners(){
-
+        binding.fabAddTask.setOnClickListener{
+            findNavController().navigate(R.id.action_navigation_home_to_navigation_add_edit_task)
+        }
     }
 }

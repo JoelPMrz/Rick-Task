@@ -6,5 +6,15 @@
     <string name="title_favourites">Favourites</string>
     <string name="add_task_fab_description">Button to add new task</string>
     <string name="no_tasks_yet">There are no tasks yet</string>
-    <string name="btn_add_edit_task">Añadir</string>
+    <string name="btn_add_edit_task">Create</string>
+    <string name="add_edit_task_title">New Task</string>
+    <string name="task_form_hint_title">Shopping</string>
+    <string name="form_task_hint_title">Title</string>
+    <string name="form_task_hint_description">Description</string>
+    <string name="form_task_hint_date">Date</string>
+    <string name="form_task_completed">Completed</string>
+    <string name="title_add_edit_task">New Task</string>
+    <string name="ic_filter_list_description">Filter icon to modify the order of the task list</string>
+    <string name="home_title">Tasks</string>
+    <string name="card_task_title">Título</string>
 </resources>
