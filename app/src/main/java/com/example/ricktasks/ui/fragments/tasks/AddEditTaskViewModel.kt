@@ -44,21 +44,6 @@ class AddEditTaskViewModel(
         }
     }
 
-    fun deleteTask(task: TaskEntity){
-        viewModelScope.launch {
-            repository.deleteTask(task)
-        }
-    }
-
-    private var _tasks = MutableLiveData<List<TaskEntity>>()
-    val tasks: LiveData<List<TaskEntity>> get() = _tasks
-
-    fun getAllTasks(){
-        viewModelScope.launch {
-            _tasks.value = repository.getAllTasks()
-        }
-    }
-
 }
 
 class AddEditTaskViewModelFactory(
@@ -66,7 +51,6 @@ class AddEditTaskViewModelFactory(
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(AddEditTaskViewModel::class.java)) {
-            // Crear TaskRepository pasando el taskDao
             val repository = TaskRepository(taskDao)
             return AddEditTaskViewModel(repository) as T
         }

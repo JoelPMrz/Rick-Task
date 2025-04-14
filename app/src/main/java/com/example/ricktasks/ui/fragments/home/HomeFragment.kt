@@ -9,39 +9,30 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.ricktasks.MainActivity
 import com.example.ricktasks.R
+import com.example.ricktasks.data.local.dao.TaskDao
+import com.example.ricktasks.data.local.database.AppDatabase
 import com.example.ricktasks.data.local.entity.TaskEntity
+import com.example.ricktasks.data.repository.TaskRepository
 import com.example.ricktasks.databinding.FragmentHomeBinding
 import com.example.ricktasks.ui.adapters.TasksAdapter
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+
+    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var tasksAdapter: TasksAdapter
+    private lateinit var taskDao: TaskDao
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        (activity as MainActivity).showBottomNav()
-        binding.rvTasks.adapter = TasksAdapter(
-            listOf(
-                TaskEntity(1,"Titulo 1", "Esto es una descripcion 1", "22 Marzo 2025", false),
-                TaskEntity(2,"Titulo 2 algo más larguete ", "Esto es una descripcion 2", "05 Enero 2025", false),
-                TaskEntity(3,"Titulo 3", "Esto es una descripcion 3", "30 Noviembre 2024", true)
-            )
-        )
-        listeners()
-
+        setUp()
         return root
     }
 
@@ -50,10 +41,43 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
+    private fun setUp(){
+        (activity as MainActivity).showBottomNav()
 
-    fun listeners(){
+        taskDao = AppDatabase.getDatabase(requireContext()).taskDao()
+        val factory = HomeViewModelFactory(taskDao)
+        homeViewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
+
+        tasksAdapter = TasksAdapter(
+            /*
+            onTaskClick = { task ->
+                val action = HomeFragmentDirections
+                    .actionNavigationHomeToNavigationAddEditTask(task = task)
+                findNavController().navigate(action)
+            },
+
+             */
+            onTaskDelete = { task ->
+                homeViewModel.deleteTask(task)
+                homeViewModel.getAllTasks()
+            }
+        )
+        binding.rvTasks.adapter = tasksAdapter
+
+        homeViewModel.getAllTasks()
+
+        homeViewModel.tasks.observe(viewLifecycleOwner) { taskList ->
+            tasksAdapter.submitList(taskList)
+        }
+
+        listeners()
+    }
+
+    private fun listeners(){
         binding.fabAddTask.setOnClickListener{
-            findNavController().navigate(R.id.action_navigation_home_to_navigation_add_edit_task)
+            val action = HomeFragmentDirections
+                .actionNavigationHomeToNavigationAddEditTask()
+            findNavController().navigate(action)
         }
     }
 }

@@ -22,7 +22,7 @@ class TaskRepository(
         taskDao.deleteTask(task)
     }
 
-    suspend fun getTaskById(id:Int) :TaskEntity{
+    suspend fun getTaskById(id:Int) :TaskEntity?{
         return taskDao.getTaskById(id)
     }
 

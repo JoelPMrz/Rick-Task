@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     kotlin("kapt")
     id("kotlin-parcelize")
+    alias(libs.plugins.androidx.navigation.safe.args.kotlin)
 }
 
 android {
@@ -60,4 +61,5 @@ dependencies {
 
     //Procesar anotaciones -> Migrar a KSP
     kapt (libs.androidx.room.compiler)
+
 }
