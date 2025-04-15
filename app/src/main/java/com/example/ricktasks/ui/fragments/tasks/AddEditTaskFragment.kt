@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.ricktasks.MainActivity
 import com.example.ricktasks.R
 import com.example.ricktasks.data.local.dao.TaskDao
@@ -29,6 +30,8 @@ class AddEditTaskFragment: Fragment() {
     private var _binding : FragmentAddEditTaskBinding? = null
     private val binding get() = _binding!!
 
+    private val args by navArgs<AddEditTaskFragmentArgs>()
+
     private lateinit var viewModel: AddEditTaskViewModel
     private lateinit var taskDao: TaskDao
 
@@ -38,12 +41,7 @@ class AddEditTaskFragment: Fragment() {
     private var descriptionTask: String =""
     private var dateTask: String = ""
     private var isCompleted: Boolean = false
-    private var newTask = TaskEntity(
-        title = titleTask,
-        description = descriptionTask,
-        date =  dateTask,
-        isCompleted = isCompleted
-    )
+    var task : TaskEntity? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,6 +56,8 @@ class AddEditTaskFragment: Fragment() {
         viewModel = ViewModelProvider(this, factory).get(AddEditTaskViewModel::class.java)
 
         chip = binding.chipFormTaskCompleted
+
+        handleEditMode()
 
         val root: View = binding.root
         return root
@@ -97,12 +97,50 @@ class AddEditTaskFragment: Fragment() {
         }
 
         binding.btnAddEditTask.setOnClickListener{
-            addTask()
+            if(args.task != null){
+                updateTask()
+            }else{
+                addTask()
+            }
         }
 
         binding.tbAddEditTask.setNavigationOnClickListener{
             findNavController().popBackStack()
         }
+    }
+
+    private fun handleEditMode(){
+        if(args.task != null){
+            task = args.task!!
+
+            titleTask = task!!.title
+            descriptionTask = task!!.description
+            dateTask = task!!.date
+            chipChecked = task!!.isCompleted
+
+            binding.tvAddEditTaskTitle.text = "Editar tarea"
+            binding.etTaskFormTitle.setText(titleTask)
+            binding.etTaskFormDescription.setText(descriptionTask)
+            binding.etTaskFormDate.setText(dateTask)
+            binding.chipFormTaskCompleted.isChecked = chipChecked
+            chipUpdateColors()
+
+            binding.btnAddEditTask.text = "Editar"
+        }
+    }
+
+    private fun updateTask(){
+        val taskToUpdate = updateValues() ?: return
+        viewModel.updateTask(taskToUpdate)
+
+        viewModel.taskUpdated.observe(viewLifecycleOwner, Observer { isUpdated ->
+            if (isUpdated) {
+                Toast.makeText(context, "Tarea actualizada", Toast.LENGTH_SHORT).show()
+                findNavController().popBackStack()
+            } else {
+                Toast.makeText(context, "Error al editar la tarea", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
 
@@ -121,31 +159,30 @@ class AddEditTaskFragment: Fragment() {
         }
     }
 
-
-
-    private fun addTask() {
-        // Obtener los valores de los campos de entrada
+    private fun updateValues(): TaskEntity? {
         titleTask = binding.etTaskFormTitle.text.toString()
         descriptionTask = binding.etTaskFormDescription.text.toString()
         dateTask = binding.etTaskFormDate.text.toString()
         isCompleted = chipChecked
 
-        // Verificar que los campos no estén vacíos
         if (titleTask.isEmpty() || descriptionTask.isEmpty() || dateTask.isEmpty()) {
-            Toast.makeText(context, "Por favor completa todos los campos", Toast.LENGTH_SHORT).show()
-            return // No proceder si falta algún campo
+            Toast.makeText(context, "Completa todos los campos", Toast.LENGTH_SHORT).show()
+            return null
         }
 
-        // Crear la nueva tarea con los valores obtenidos
-        newTask = TaskEntity(
+        return TaskEntity(
+            id = task?.id ?: 0,
             title = titleTask,
             description = descriptionTask,
             date = dateTask,
             isCompleted = isCompleted
         )
+    }
 
-        // Insertar la tarea en la base de datos
-        viewModel.insertTask(newTask)
+
+    private fun addTask() {
+        val taskToInsert = updateValues() ?: return
+        viewModel.insertTask(taskToInsert)
 
         // Observar si la tarea se insertó correctamente
         viewModel.taskInserted.observe(viewLifecycleOwner, Observer { isInserted ->

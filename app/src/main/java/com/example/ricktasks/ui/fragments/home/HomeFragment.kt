@@ -11,8 +11,6 @@ import com.example.ricktasks.MainActivity
 import com.example.ricktasks.R
 import com.example.ricktasks.data.local.dao.TaskDao
 import com.example.ricktasks.data.local.database.AppDatabase
-import com.example.ricktasks.data.local.entity.TaskEntity
-import com.example.ricktasks.data.repository.TaskRepository
 import com.example.ricktasks.databinding.FragmentHomeBinding
 import com.example.ricktasks.ui.adapters.TasksAdapter
 
@@ -49,16 +47,20 @@ class HomeFragment : Fragment() {
         homeViewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
 
         tasksAdapter = TasksAdapter(
-            /*
             onTaskClick = { task ->
                 val action = HomeFragmentDirections
                     .actionNavigationHomeToNavigationAddEditTask(task = task)
                 findNavController().navigate(action)
             },
 
-             */
             onTaskDelete = { task ->
                 homeViewModel.deleteTask(task)
+                homeViewModel.getAllTasks()
+            },
+
+            onTaskState={ task->
+                task.isCompleted = !task.isCompleted
+                homeViewModel.updateTask(task)
                 homeViewModel.getAllTasks()
             }
         )

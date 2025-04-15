@@ -11,7 +11,7 @@ import com.example.ricktasks.core.utils.DatesConverter
 import com.example.ricktasks.data.local.dao.TaskDao
 import com.example.ricktasks.data.local.entity.TaskEntity
 
-@Database(entities = [TaskEntity::class], version = 1)
+@Database(entities = [TaskEntity::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun taskDao(): TaskDao
 

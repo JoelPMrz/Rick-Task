@@ -12,13 +12,13 @@ import com.example.ricktasks.ui.fragments.tasks.AddEditTaskViewModel
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val repository : TaskRepository
+    private val repository: TaskRepository
 ) : ViewModel() {
 
     private var _tasks = MutableLiveData<List<TaskEntity>>()
     val tasks: LiveData<List<TaskEntity>> get() = _tasks
 
-    fun getAllTasks(){
+    fun getAllTasks() {
         viewModelScope.launch {
             _tasks.value = repository.getAllTasks()
         }
@@ -27,9 +27,15 @@ class HomeViewModel(
     private val _task = MutableLiveData<TaskEntity>()
     val task: LiveData<TaskEntity> get() = _task
 
-    fun deleteTask(task: TaskEntity){
+    fun deleteTask(task: TaskEntity) {
         viewModelScope.launch {
             repository.deleteTask(task)
+        }
+    }
+
+    fun updateTask(task: TaskEntity) {
+        viewModelScope.launch {
+            repository.updateTask(task)
         }
     }
 }

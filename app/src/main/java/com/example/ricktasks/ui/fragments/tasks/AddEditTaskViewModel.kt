@@ -31,16 +31,25 @@ class AddEditTaskViewModel(
             try {
                 // Intentar insertar la tarea
                 repository.insertTask(task)
-                _taskInserted.value = true  // La tarea fue insertada correctamente
+                _taskInserted.value = true
             } catch (e: Exception) {
-                _taskInserted.value = false  // Hubo un error al insertar la tarea
+                _taskInserted.value = false
             }
         }
     }
 
+    private val _taskUpdated = MutableLiveData<Boolean>()
+    val taskUpdated: LiveData<Boolean> get() = _taskUpdated
+
     fun updateTask(task:TaskEntity){
         viewModelScope.launch {
-            repository.updateTask(task)
+            try {
+                repository.updateTask(task)
+                _taskUpdated.value = true
+            } catch (e: Exception) {
+                _taskUpdated.value = false
+            }
+
         }
     }
 

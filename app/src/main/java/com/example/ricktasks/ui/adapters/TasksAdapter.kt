@@ -1,13 +1,17 @@
 package com.example.ricktasks.ui.adapters
 
 import android.view.LayoutInflater
-import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
+import com.example.ricktasks.R
 import com.example.ricktasks.data.local.entity.TaskEntity
 import com.example.ricktasks.databinding.ItemTaskBinding
 
 class TasksAdapter(
-    private val onTaskDelete: (TaskEntity) -> Unit
+    private val onTaskClick: (TaskEntity) -> Unit,
+    private val onTaskDelete: (TaskEntity) -> Unit,
+    private val onTaskState: (TaskEntity) -> Unit
 ) : RecyclerView.Adapter<TasksAdapter.ViewHolder>() {
 
     private var tasks: List<TaskEntity> = emptyList()
@@ -17,35 +21,71 @@ class TasksAdapter(
         notifyDataSetChanged()
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemTaskBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         )
-
         return ViewHolder(binding)
     }
 
     override fun getItemCount() = tasks.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(tasks[position], onTaskDelete,)
+        holder.bind(tasks[position], onTaskClick, onTaskDelete, onTaskState)
     }
 
     class ViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(task: TaskEntity, onTaskDelete: (TaskEntity) -> Unit) {
+        fun bind(
+            task: TaskEntity,
+            onTaskClick: (TaskEntity) -> Unit,
+            onTaskDelete: (TaskEntity) -> Unit,
+            onTaskState : (TaskEntity) -> Unit
+        ) {
             binding.taskTitle.text = task.title
             binding.taskDescription.text = task.description
             binding.taskDate.text = task.date
             binding.chipFormTaskCompleted.isChecked = task.isCompleted
-            binding.deleteIconTask.setOnClickListener{
+
+            chipUpdateColors(task.isCompleted)
+
+            binding.root.setOnClickListener {
+                onTaskClick(task)
+            }
+
+            binding.deleteIconTask.setOnClickListener {
                 onTaskDelete(task)
             }
-            binding.root.setOnClickListener{
 
+            binding.chipFormTaskCompleted.setOnClickListener{
+                onTaskState(task)
+            }
+
+            if(task.isCompleted){
+                binding.root.alpha = 0.4f
+            }else{
+                binding.root.alpha = 1f
             }
         }
+
+        private fun chipUpdateColors(isCompleted: Boolean) {
+
+            val chip = binding.chipFormTaskCompleted
+
+            if (isCompleted) {
+                chip.setChipBackgroundColorResource(R.color.md_theme_secondaryContainer)
+                chip.setTextColor(ContextCompat.getColor(binding.root.context, R.color.md_theme_onSecondaryContainer))
+                chip.setChipIconResource(R.drawable.ic_check_circle_24dp)
+                chip.setChipIconTintResource(R.color.md_theme_onSecondaryContainer)
+            } else {
+                chip.setChipBackgroundColorResource(R.color.md_theme_errorContainer)
+                chip.setTextColor(ContextCompat.getColor(binding.root.context, R.color.md_theme_onErrorContainer))
+                chip.setChipIconResource(R.drawable.ic_cancel_circle_24dp)
+                chip.setChipIconTintResource(R.color.md_theme_onErrorContainer)
+            }
+        }
+
     }
 }
+
