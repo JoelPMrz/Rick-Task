@@ -24,6 +24,18 @@ class HomeViewModel(
         }
     }
 
+    fun getNotCompletedTasks(){
+        viewModelScope.launch {
+            _tasks.value = repository.getNotCompletedTasks()
+        }
+    }
+
+    fun getCompletedTasks(){
+        viewModelScope.launch {
+            _tasks.value = repository.getCompletedTasks()
+        }
+    }
+
     private val _task = MutableLiveData<TaskEntity>()
     val task: LiveData<TaskEntity> get() = _task
 

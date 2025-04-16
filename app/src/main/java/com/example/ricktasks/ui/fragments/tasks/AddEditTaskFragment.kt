@@ -2,13 +2,11 @@ package com.example.ricktasks.ui.fragments.tasks
 
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -20,10 +18,8 @@ import com.example.ricktasks.R
 import com.example.ricktasks.data.local.dao.TaskDao
 import com.example.ricktasks.data.local.database.AppDatabase
 import com.example.ricktasks.data.local.entity.TaskEntity
-import com.example.ricktasks.data.repository.TaskRepository
 import com.example.ricktasks.databinding.FragmentAddEditTaskBinding
 import com.google.android.material.chip.Chip
-import java.time.LocalDate
 
 class AddEditTaskFragment: Fragment() {
 
@@ -118,14 +114,14 @@ class AddEditTaskFragment: Fragment() {
             dateTask = task!!.date
             chipChecked = task!!.isCompleted
 
-            binding.tvAddEditTaskTitle.text = "Editar tarea"
+            binding.tvAddEditTaskTitle.text = R.string.edit_task_title.toString()
             binding.etTaskFormTitle.setText(titleTask)
             binding.etTaskFormDescription.setText(descriptionTask)
             binding.etTaskFormDate.setText(dateTask)
             binding.chipFormTaskCompleted.isChecked = chipChecked
             chipUpdateColors()
 
-            binding.btnAddEditTask.text = "Editar"
+            binding.btnAddEditTask.text = R.string.btn_edit_task.toString()
         }
     }
 
@@ -135,10 +131,10 @@ class AddEditTaskFragment: Fragment() {
 
         viewModel.taskUpdated.observe(viewLifecycleOwner, Observer { isUpdated ->
             if (isUpdated) {
-                Toast.makeText(context, "Tarea actualizada", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.succes_edit_task, Toast.LENGTH_SHORT).show()
                 findNavController().popBackStack()
             } else {
-                Toast.makeText(context, "Error al editar la tarea", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.error_edit_task, Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -166,7 +162,7 @@ class AddEditTaskFragment: Fragment() {
         isCompleted = chipChecked
 
         if (titleTask.isEmpty() || descriptionTask.isEmpty() || dateTask.isEmpty()) {
-            Toast.makeText(context, "Completa todos los campos", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, R.string.missing_fields_to_complete, Toast.LENGTH_SHORT).show()
             return null
         }
 
@@ -188,15 +184,14 @@ class AddEditTaskFragment: Fragment() {
         viewModel.taskInserted.observe(viewLifecycleOwner, Observer { isInserted ->
             if (isInserted) {
                 // La tarea se insertó correctamente
-                Toast.makeText(context, "Tarea creada con éxito", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.succes_add_task, Toast.LENGTH_SHORT).show()
                 findNavController().popBackStack() // Volver al fragmento anterior
             } else {
                 // Hubo un error al crear la tarea
-                Toast.makeText(context, "Error al crear la tarea", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.error_add_task, Toast.LENGTH_SHORT).show()
             }
         })
     }
-
 
     private fun showDatePickerDialog() {
         val calendar = Calendar.getInstance()
@@ -215,10 +210,5 @@ class AddEditTaskFragment: Fragment() {
 
         datePickerDialog.show()
     }
-
-
-
-
-
 
 }

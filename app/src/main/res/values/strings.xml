@@ -5,8 +5,8 @@
     <string name="title_favourites">Favoritos</string>
     <string name="add_task_fab_description">Botón para agregar nueva tarea</string>
     <string name="no_tasks_yet">Todavía no hay tareas</string>
-    <string name="btn_add_edit_task">Añadir</string>
-    <string name="add_edit_task_title">Nueva Tarea</string>
+    <string name="btn_add_task">Añadir</string>
+    <string name="add_task_title">Nueva Tarea</string>
     <string name="task_form_hint_title">Hacer la compra</string>
     <string name="form_task_hint_title">Título</string>
     <string name="form_task_hint_description">Descripción</string>
@@ -18,4 +18,16 @@
     <string name="card_task_title">Título</string>
     <string name="card_task_description">Breve descripción de la tarea</string>
     <string name="card_task_date">21 April 2025</string>
+    <string name="all_tasks_filter_dialog">Todas las tareas</string>
+    <string name="completed_tasks_dialog">Tareas completadas</string>
+    <string name="not_completed_tasks_dialog">Tareas no completadas</string>
+    <string name="tasks_dialog_title">¿Cómo deseas ordenar la lista de tareas?</string>
+    <string name="btn_edit_task">Editar</string>
+    <string name="error_edit_task">Error al editar la tarea</string>
+    <string name="error_add_task">Error al editar la tarea</string>
+    <string name="succes_add_task">Tarea creada</string>
+    <string name="succes_edit_task">Tarea editada</string>
+    <string name="edit_task_title">Editar tarea</string>
+    <string name="missing_fields_to_complete">Completa todos los campos</string>
+    <string name="cancel">Cancelar</string>
 </resources>

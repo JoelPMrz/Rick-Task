@@ -26,7 +26,7 @@
         android:fontFamily="@font/inter_24pt_bold"
         android:textSize="26sp"
         app:layout_constraintTop_toBottomOf="@+id/tb_add_edit_task"
-        android:text="@string/add_edit_task_title"
+        android:text="@string/add_task_title"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -131,7 +131,7 @@
         android:layout_height="60dp"
         android:layout_marginHorizontal="40dp"
         android:layout_marginVertical="20dp"
-        android:text="@string/btn_add_edit_task"
+        android:text="@string/btn_add_task"
         android:fontFamily="@font/inter_18pt_semi_bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

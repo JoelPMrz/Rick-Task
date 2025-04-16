@@ -18,6 +18,14 @@ class TaskRepository(
         return taskDao.getAllTasks()
     }
 
+    suspend fun getNotCompletedTasks() : List<TaskEntity>{
+        return taskDao.getNotCompletedTasks()
+    }
+
+    suspend fun getCompletedTasks() : List<TaskEntity>{
+        return taskDao.getCompletedTasks()
+    }
+
     suspend fun deleteTask(task: TaskEntity){
         taskDao.deleteTask(task)
     }
