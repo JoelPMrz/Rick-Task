@@ -31,4 +31,11 @@
     <string name="edit_task_title">Edit task</string>
     <string name="missing_fields_to_complete">Please complete all fields</string>
     <string name="cancel">Cancel</string>
+    <string name="character_image">Character Image</string>
+    <string name="home_menu_filter_tasks">Filtrar tareas</string>
+    <string name="home_menu_language">Idioma</string>
+    <string name="delete_task_dialog_title">¿Deseas eliminar esta tarea?</string>
+    <string name="delete_task_dialog_description">Si eliminas esta tarea del listado, se eliminará de forma permanentemente.</string>
+    <string name="delete">Eliminar</string>
+    <string name="characters_title">Personajes</string>
 </resources>

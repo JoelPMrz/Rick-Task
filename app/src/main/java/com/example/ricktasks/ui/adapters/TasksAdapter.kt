@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.ricktasks.R
 import com.example.ricktasks.data.local.entity.TaskEntity
 import com.example.ricktasks.databinding.ItemTaskBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class TasksAdapter(
     private val onTaskClick: (TaskEntity) -> Unit,
@@ -55,18 +56,26 @@ class TasksAdapter(
             }
 
             binding.deleteIconTask.setOnClickListener {
-                onTaskDelete(task)
+                val dialogView =
+                    LayoutInflater.from(binding.root.context).inflate(R.layout.delete_task_dialog, null)
+
+                val dialog = MaterialAlertDialogBuilder(binding.root.context)
+                    .setView(dialogView)
+                    .setNegativeButton(R.string.cancel) { dialogInterface, _ ->
+                        dialogInterface.dismiss()
+                    }
+                    .setPositiveButton(R.string.delete) { dialogInterface, _ ->
+                        onTaskDelete(task)
+                        dialogInterface.dismiss()
+                    }
+                    .show()
+                dialog.setCancelable(true)
             }
 
             binding.chipFormTaskCompleted.setOnClickListener{
                 onTaskState(task)
             }
 
-            if(task.isCompleted){
-                binding.root.alpha = 0.4f
-            }else{
-                binding.root.alpha = 1f
-            }
         }
 
         private fun chipUpdateColors(isCompleted: Boolean) {
@@ -85,6 +94,7 @@ class TasksAdapter(
                 chip.setChipIconTintResource(R.color.md_theme_onErrorContainer)
             }
         }
+
 
     }
 }

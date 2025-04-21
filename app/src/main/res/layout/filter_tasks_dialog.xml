@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/not_completed_tasks_dialog"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:clickable="true"
         app:layout_constraintTop_toBottomOf="@+id/filter_tasks_dialog_title"
         app:layout_constraintStart_toStartOf="@+id/filter_tasks_dialog_title"/>
@@ -36,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/completed_tasks_dialog"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:clickable="true"
         app:layout_constraintTop_toBottomOf="@+id/filter_tasks_dialog_not_completed"
         app:layout_constraintStart_toStartOf="@+id/filter_tasks_dialog_title"/>
@@ -46,7 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/all_tasks_filter_dialog"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:clickable="true"
         app:layout_constraintTop_toBottomOf="@+id/filter_tasks_dialog_completed"
         app:layout_constraintStart_toStartOf="@+id/filter_tasks_dialog_title"/>

@@ -13,7 +13,9 @@ import com.example.ricktasks.MainActivity
 import com.example.ricktasks.R
 import com.example.ricktasks.data.local.dao.TaskDao
 import com.example.ricktasks.data.local.database.AppDatabase
+import com.example.ricktasks.data.repository.PreferencesRepository
 import com.example.ricktasks.databinding.FragmentHomeBinding
+import com.example.ricktasks.di.PreferencesProvider
 import com.example.ricktasks.ui.adapters.TasksAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -26,8 +28,12 @@ class HomeFragment : Fragment() {
     private lateinit var tasksAdapter: TasksAdapter
     private lateinit var taskDao: TaskDao
 
-    private var showDialog : Boolean = false
-    private var filter  = 2
+    private lateinit var preferencesRepository: PreferencesRepository
+    private var darkMode = false
+
+    private var showFilterDialog: Boolean = false
+    private var filter = 2
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,12 +51,16 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
-    private fun setUp(){
+    private fun setUp() {
         (activity as MainActivity).showBottomNav()
 
         taskDao = AppDatabase.getDatabase(requireContext()).taskDao()
         val factory = HomeViewModelFactory(taskDao)
         homeViewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
+
+        preferencesRepository = PreferencesProvider.provideRepository(requireContext())
+        darkMode = preferencesRepository.getThemePreference()
+        binding.icDarkLightMode.setImageResource(if (darkMode) R.drawable.ic_dark_mode else R.drawable.ic_light_mode)
 
         tasksAdapter = TasksAdapter(
             onTaskClick = { task ->
@@ -64,7 +74,7 @@ class HomeFragment : Fragment() {
                 homeViewModel.getAllTasks()
             },
 
-            onTaskState={ task->
+            onTaskState = { task ->
                 task.isCompleted = !task.isCompleted
                 homeViewModel.updateTask(task)
                 homeViewModel.getAllTasks()
@@ -80,27 +90,34 @@ class HomeFragment : Fragment() {
         listeners()
     }
 
-    private fun listeners(){
-        binding.fabAddTask.setOnClickListener{
+    private fun listeners() {
+        binding.fabAddTask.setOnClickListener {
             val action = HomeFragmentDirections
                 .actionNavigationHomeToNavigationAddEditTask()
             findNavController().navigate(action)
         }
 
-        binding.icFilterList.setOnClickListener{
-            showDialog = true
+        binding.icFilterList.setOnClickListener {
+            showFilterDialog = true
             filterTasksDialog()
         }
 
-
-
-
+        binding.icDarkLightMode.setOnClickListener {
+            darkMode = !darkMode
+            preferencesRepository.saveThemePreference(darkMode)
+            requireActivity().recreate()
+        }
     }
 
+
+
     private fun filterTasksDialog() {
-        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.filter_tasks_dialog, null)
-        val notCompletedTextView = dialogView.findViewById<TextView>(R.id.filter_tasks_dialog_not_completed)
-        val completedTextView = dialogView.findViewById<TextView>(R.id.filter_tasks_dialog_completed)
+        val dialogView =
+            LayoutInflater.from(requireContext()).inflate(R.layout.filter_tasks_dialog, null)
+        val notCompletedTextView =
+            dialogView.findViewById<TextView>(R.id.filter_tasks_dialog_not_completed)
+        val completedTextView =
+            dialogView.findViewById<TextView>(R.id.filter_tasks_dialog_completed)
         val allTextView = dialogView.findViewById<TextView>(R.id.filter_tasks_dialog_all)
 
         val dialog = MaterialAlertDialogBuilder(requireContext())
@@ -110,10 +127,9 @@ class HomeFragment : Fragment() {
             }
             .create()
 
-        // Cierre al tocar fuera
         dialog.setCanceledOnTouchOutside(true)
         dialog.setOnCancelListener {
-            showDialog = false
+            showFilterDialog = false
         }
 
         notCompletedTextView.setOnClickListener {
@@ -134,13 +150,13 @@ class HomeFragment : Fragment() {
             dialog.dismiss()
         }
 
-        if (showDialog) dialog.show()
+        if (showFilterDialog) dialog.show()
     }
 
-    private fun getFilterTasksList(){
-        when(filter){
+    private fun getFilterTasksList() {
+        when (filter) {
             0 -> homeViewModel.getNotCompletedTasks()
-            1-> homeViewModel.getCompletedTasks()
+            1 -> homeViewModel.getCompletedTasks()
             else -> homeViewModel.getAllTasks()
         }
     }
