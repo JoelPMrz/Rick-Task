@@ -20,7 +20,9 @@ class SharedPreferencesManager(private val sharedPreferences: SharedPreferences)
         return sharedPreferences.getBoolean(key, default)
     }
 
-    fun clear() {
-        sharedPreferences.edit().clear().apply()
+    fun getAll(): Map<String, *> {
+        return sharedPreferences.all
     }
+
+
 }

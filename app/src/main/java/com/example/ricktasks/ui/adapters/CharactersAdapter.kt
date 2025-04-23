@@ -2,12 +2,16 @@ package com.example.ricktasks.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.ricktasks.databinding.ItemCharacterBinding
+import com.example.ricktasks.R
 import com.example.ricktasks.data.remote.model.Character
+import com.example.ricktasks.data.repository.PreferencesRepository
+import com.example.ricktasks.databinding.ItemCharacterBinding
 
 class CharactersAdapter(
+    private val preferencesRepository: PreferencesRepository,
     private var characters: List<Character> = listOf()
 ) : RecyclerView.Adapter<CharactersAdapter.CharacterViewHolder>() {
 
@@ -38,6 +42,27 @@ class CharactersAdapter(
             Glide.with(binding.root.context)
                 .load(character.image)
                 .into(binding.imageCharacter)
+
+            val isFav = preferencesRepository.isFavorite(character.id)
+            updateFavIcon(isFav)
+
+            binding.btnFav.setOnClickListener {
+                preferencesRepository.toggleFavorite(character.id)
+                val newFavState = preferencesRepository.isFavorite(character.id)
+                updateFavIcon(newFavState)
+                notifyDataSetChanged()
+            }
+        }
+
+        private fun updateFavIcon(isFav: Boolean) {
+            if (isFav) {
+                binding.btnFav.alpha = 1.0f
+                binding.btnFav.imageTintList = null
+            } else {
+                binding.btnFav.alpha = 0.2f
+                binding.btnFav.imageTintList = ContextCompat.getColorStateList(binding.root.context, R.color.md_theme_secondaryContainer_mediumContrast)
+            }
         }
     }
 }
+

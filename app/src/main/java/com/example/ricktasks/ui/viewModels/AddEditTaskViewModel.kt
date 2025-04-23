@@ -1,4 +1,4 @@
-package com.example.ricktasks.ui.fragments.tasks
+package com.example.ricktasks.ui.viewModels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -12,4 +12,21 @@ class PreferencesRepository(private val preferencesManager: SharedPreferencesMan
         return preferencesManager.getBoolean("dark_mode", false)
     }
 
+    fun toggleFavorite(characterId: Int) {
+        val key = "fav_$characterId"
+        val current = preferencesManager.getBoolean(key, false)
+        preferencesManager.saveBoolean(key, !current)
+    }
+
+    fun isFavorite(characterId: Int): Boolean {
+        return preferencesManager.getBoolean("fav_$characterId", false)
+    }
+
+    fun getFavorites(): Set<Int> {
+        return preferencesManager.getAll()
+            .filter { it.key.startsWith("fav_") && it.value == true }
+            .mapNotNull { it.key.removePrefix("fav_").toIntOrNull() }
+            .toSet()
+    }
+
 }

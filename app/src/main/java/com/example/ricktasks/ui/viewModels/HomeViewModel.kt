@@ -1,4 +1,4 @@
-package com.example.ricktasks.ui.fragments.home
+package com.example.ricktasks.ui.viewModels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.ricktasks.data.local.dao.TaskDao
 import com.example.ricktasks.data.local.entity.TaskEntity
 import com.example.ricktasks.data.repository.TaskRepository
-import com.example.ricktasks.ui.fragments.tasks.AddEditTaskViewModel
 import kotlinx.coroutines.launch
 
 class HomeViewModel(

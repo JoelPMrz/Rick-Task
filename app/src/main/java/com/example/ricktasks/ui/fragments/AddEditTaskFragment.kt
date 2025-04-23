@@ -1,4 +1,4 @@
-package com.example.ricktasks.ui.fragments.tasks
+package com.example.ricktasks.ui.fragments
 
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
@@ -19,6 +19,8 @@ import com.example.ricktasks.data.local.dao.TaskDao
 import com.example.ricktasks.data.local.database.AppDatabase
 import com.example.ricktasks.data.local.entity.TaskEntity
 import com.example.ricktasks.databinding.FragmentAddEditTaskBinding
+import com.example.ricktasks.ui.viewModels.AddEditTaskViewModel
+import com.example.ricktasks.ui.viewModels.AddEditTaskViewModelFactory
 import com.google.android.material.chip.Chip
 
 class AddEditTaskFragment: Fragment() {
