@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.ricktasks.MainActivity
 import com.example.ricktasks.R
+import com.example.ricktasks.core.utils.isNetworkAvailable
 import com.example.ricktasks.data.local.dao.TaskDao
 import com.example.ricktasks.data.local.database.AppDatabase
 import com.example.ricktasks.data.repository.PreferencesRepository

@@ -41,6 +41,7 @@ class HomeViewModel(
     fun deleteTask(task: TaskEntity) {
         viewModelScope.launch {
             repository.deleteTask(task)
+            repository.getAllTasks()
         }
     }
 

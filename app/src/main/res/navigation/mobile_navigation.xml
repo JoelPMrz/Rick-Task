@@ -19,28 +19,38 @@
         android:id="@+id/navigation_characters"
         android:name="com.example.ricktasks.ui.fragments.CharactersFragment"
         android:label="@string/title_characters"
-        tools:layout="@layout/fragment_characters" />
+        tools:layout="@layout/fragment_characters">
+
+        <action
+            android:id="@+id/action_charactersFragment_self"
+            app:destination="@id/navigation_characters" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_favourites"
         android:name="com.example.ricktasks.ui.fragments.FavouritesFragment"
         android:label="@string/title_favourites"
-        tools:layout="@layout/fragment_favourites" />
+        tools:layout="@layout/fragment_favourites">
+
+        <action
+            android:id="@+id/action_favouritesFragment_self"
+            app:destination="@id/navigation_favourites" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_add_edit_task"
-        android:label="@string/title_add_edit_task"
         android:name="com.example.ricktasks.ui.fragments.AddEditTaskFragment"
-        tools:layout="@layout/fragment_add_edit_task" >
+        android:label="@string/title_add_edit_task"
+        tools:layout="@layout/fragment_add_edit_task">
 
         <action
             android:id="@+id/action_navigation_add_edit_task_to_navigation_home"
             app:destination="@id/navigation_home" />
         <argument
             android:name="task"
+            android:defaultValue="@null"
             app:argType="com.example.ricktasks.data.local.entity.TaskEntity"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
 
     </fragment>
 

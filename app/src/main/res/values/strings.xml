@@ -39,4 +39,6 @@
     <string name="characters_title">Personajes</string>
     <string name="not_completed">No completadas</string>
     <string name="completed">Completadas</string>
+    <string name="not_conection">No tienes internet</string>
+    <string name="retry">Reintentar</string>
 </resources>

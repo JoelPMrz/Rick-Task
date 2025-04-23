@@ -7,9 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ricktasks.R
 import com.example.ricktasks.core.network.RetrofitInstance
+import com.example.ricktasks.core.utils.isNetworkAvailable
+import com.example.ricktasks.core.utils.showNoConnectionDialog
 import com.example.ricktasks.data.repository.CharactersRepository
 import com.example.ricktasks.data.repository.PreferencesRepository
 import com.example.ricktasks.databinding.FragmentFavouritesBinding
@@ -58,9 +62,17 @@ class FavouritesFragment : Fragment() {
 
         charactersViewModel.loadFavoriteCharacters()
 
-        // Observar la lista de personajes favoritos
+
         charactersViewModel.characters.observe(viewLifecycleOwner) { favoriteCharacters ->
-            charactersAdapter.submitList(favoriteCharacters)  // Actualizar lista de favoritos
+            charactersAdapter.submitList(favoriteCharacters)
+        }
+
+        if (!isNetworkAvailable(binding.root.context)) {
+            showNoConnectionDialog(requireContext()) {
+                findNavController().navigate(R.id.action_favouritesFragment_self)
+            }
+        } else {
+            charactersViewModel.loadFavoriteCharacters()
         }
 
 

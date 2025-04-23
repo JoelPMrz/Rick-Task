@@ -1,6 +1,5 @@
 package com.example.ricktasks.core.network
 
-import com.example.ricktasks.core.base.CharactersApi
 import com.example.ricktasks.utils.Constants
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

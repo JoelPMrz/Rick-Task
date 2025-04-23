@@ -1,7 +1,6 @@
 package com.example.ricktasks.data.repository
 
-import com.example.ricktasks.core.base.CharactersApi
-import com.example.ricktasks.data.remote.model.Character
+import com.example.ricktasks.core.network.CharactersApi
 import com.example.ricktasks.data.remote.model.CharacterResponse
 
 class CharactersRepository(

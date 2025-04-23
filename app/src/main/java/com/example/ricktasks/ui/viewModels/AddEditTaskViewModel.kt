@@ -17,12 +17,6 @@ class AddEditTaskViewModel(
     private val _task = MutableLiveData<TaskEntity>()
     val task: LiveData<TaskEntity> get() = _task
 
-    fun getTaskById(id:Int){
-        viewModelScope.launch {
-            _task.value = repository.getTaskById(id)
-        }
-    }
-
     private val _taskInserted = MutableLiveData<Boolean>()
     val taskInserted: LiveData<Boolean> get() = _taskInserted
 
