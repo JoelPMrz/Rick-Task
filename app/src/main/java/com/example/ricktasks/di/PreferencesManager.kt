@@ -12,6 +12,15 @@ class SharedPreferencesManager(private val sharedPreferences: SharedPreferences)
         return sharedPreferences.getString(key, default) ?: default
     }
 
+    fun saveInt(key: String, value: Int) {
+        sharedPreferences.edit().putInt(key, value).apply()
+    }
+
+    fun getInt(key: String, default: Int = 0): Int {
+        return sharedPreferences.getInt(key, default)
+    }
+
+
     fun saveBoolean(key: String, value: Boolean) {
         sharedPreferences.edit().putBoolean(key, value).apply()
     }

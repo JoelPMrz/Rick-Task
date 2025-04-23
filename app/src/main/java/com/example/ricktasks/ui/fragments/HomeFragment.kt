@@ -63,6 +63,7 @@ class HomeFragment : Fragment() {
         preferencesRepository = PreferencesProvider.provideRepository(requireContext())
         darkMode = preferencesRepository.getThemePreference()
         binding.icDarkLightMode.setImageResource(if (darkMode) R.drawable.ic_dark_mode else R.drawable.ic_light_mode)
+        filter = preferencesRepository.getTaskFilter()
 
         tasksAdapter = TasksAdapter(
             onTaskClick = { task ->
@@ -73,14 +74,14 @@ class HomeFragment : Fragment() {
 
             onTaskDelete = { task ->
                 homeViewModel.deleteTask(task)
-                homeViewModel.getAllTasks()
+                getFilterTasksList()
                 Toast.makeText(binding.root.context, "Tarea eliminada", Toast.LENGTH_SHORT).show()
             },
 
             onTaskState = { task ->
                 task.isCompleted = !task.isCompleted
                 homeViewModel.updateTask(task)
-                homeViewModel.getAllTasks()
+                getFilterTasksList()
             }
         )
         binding.rvTasks.adapter = tasksAdapter
@@ -144,18 +145,21 @@ class HomeFragment : Fragment() {
 
         notCompletedTextView.setOnClickListener {
             filter = 0
+            preferencesRepository.saveTaskFilter(filter)
             getFilterTasksList()
             dialog.dismiss()
         }
 
         completedTextView.setOnClickListener {
             filter = 1
+            preferencesRepository.saveTaskFilter(filter)
             getFilterTasksList()
             dialog.dismiss()
         }
 
         allTextView.setOnClickListener {
             filter = 2
+            preferencesRepository.saveTaskFilter(filter)
             getFilterTasksList()
             dialog.dismiss()
         }
@@ -165,9 +169,20 @@ class HomeFragment : Fragment() {
 
     private fun getFilterTasksList() {
         when (filter) {
-            0 -> homeViewModel.getNotCompletedTasks()
-            1 -> homeViewModel.getCompletedTasks()
-            else -> homeViewModel.getAllTasks()
+            0 -> {
+                homeViewModel.getNotCompletedTasks()
+                binding.tvFilterSubtitle.text = getString(R.string.not_completed)
+                binding.tvFilterSubtitle.visibility = View.VISIBLE
+            }
+            1 -> {
+                homeViewModel.getCompletedTasks()
+                binding.tvFilterSubtitle.text = getString(R.string.completed)
+                binding.tvFilterSubtitle.visibility = View.VISIBLE
+            }
+            else -> {
+                homeViewModel.getAllTasks()
+                binding.tvFilterSubtitle.visibility = View.GONE
+            }
         }
     }
 }

@@ -116,14 +116,14 @@ class AddEditTaskFragment: Fragment() {
             dateTask = task!!.date
             chipChecked = task!!.isCompleted
 
-            binding.tvAddEditTaskTitle.text = R.string.edit_task_title.toString()
+            binding.tvAddEditTaskTitle.setText(R.string.edit_task_title)
             binding.etTaskFormTitle.setText(titleTask)
             binding.etTaskFormDescription.setText(descriptionTask)
             binding.etTaskFormDate.setText(dateTask)
             binding.chipFormTaskCompleted.isChecked = chipChecked
             chipUpdateColors()
 
-            binding.btnAddEditTask.text = R.string.btn_edit_task.toString()
+            binding.btnAddEditTask.setText(R.string.btn_edit_task)
         }
     }
 
@@ -182,14 +182,11 @@ class AddEditTaskFragment: Fragment() {
         val taskToInsert = updateValues() ?: return
         viewModel.insertTask(taskToInsert)
 
-        // Observar si la tarea se insertó correctamente
         viewModel.taskInserted.observe(viewLifecycleOwner, Observer { isInserted ->
             if (isInserted) {
-                // La tarea se insertó correctamente
                 Toast.makeText(context, R.string.succes_add_task, Toast.LENGTH_SHORT).show()
-                findNavController().popBackStack() // Volver al fragmento anterior
+                findNavController().popBackStack()
             } else {
-                // Hubo un error al crear la tarea
                 Toast.makeText(context, R.string.error_add_task, Toast.LENGTH_SHORT).show()
             }
         })

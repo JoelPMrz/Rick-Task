@@ -37,4 +37,6 @@
     <string name="delete_task_dialog_description">Si eliminas esta tarea del listado, se eliminará de forma permanentemente.</string>
     <string name="delete">Eliminar</string>
     <string name="characters_title">Personajes</string>
+    <string name="not_completed">No completadas</string>
+    <string name="completed">Completadas</string>
 </resources>
